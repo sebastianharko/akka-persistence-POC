@@ -140,6 +140,16 @@ $ ./akka-persistee-poc -Dclustering.port=2553 -Dweb.port=8082
 ```
 
 
+Monitoring the Actors
+=====================
 
+This integrates with Lightbend Monitoring. The easiest way to see it in action is to pull a Docker image that includes StatsD, Graphite, Grafana. One such image can be found here.
 
+To start a container out of this image:
 
+docker run -e SECRET_KEY='random-secret-key' -p 80:80 -p 3000:3000 -p 2003:2003 -p 2004:2004 -p 7002:7002 -p 8125:8125/udp -p 8126:8126 -d samsaffron/graphite
+Once the container is running you can go to http://localhost:3000 to open Grafana.
+
+You'll have to import the Graphite data source from http://localhost:80 and import the dashboards from https://github.com/typesafehub/cinnamon-ui. You need at least the Actor Dashboard and the JVM Dashboard.
+
+Note that the app works with/without StatsD running. In other words, not having StatsD running won't affect your environment.
